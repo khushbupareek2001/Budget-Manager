@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:personal_budget/main.dart';
+import 'package:personal_budget/models/web_response_extractor.dart';
 import './home.dart';
 
 class CreateJoinFamily extends StatelessWidget {
   static const routeName = "/-gender-screen";
-  final male = "M";
-  final female = "F";
-  final kids = "K";
+  bool isCreate = true;
+  int role = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,7 @@ class CreateJoinFamily extends StatelessWidget {
             // width: width,
             padding: EdgeInsets.all(width * 0.1),
             child: Text(
-              "User Name",
+              userEmail.replaceAll("@gmail.com", ""),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 30,
@@ -97,9 +98,51 @@ class CreateJoinFamily extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Home()),
-                      );
+                      TextEditingController controller =
+                          TextEditingController();
+                      return showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return new AlertDialog(
+                              title: new Text("Personal Details"),
+                              content: Column(
+                                children: [
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: "Family Head Name"),
+                                    // initialValue: "",
+                                    controller: controller,
+                                  ),
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText:
+                                            "Enter Id"), //Radio Buttons for designation
+                                  ),
+                                ],
+                              ),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("Cancel")),
+                                TextButton(
+                                    onPressed: () {
+                                      if (controller.text.isEmpty)
+                                        WebResponseExtractor.showToast(
+                                            "Please Enter Your Name");
+                                      else {
+                                        userMain = controller.text.toString();
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) => Home(true)),
+                                        );
+                                      }
+                                    },
+                                    child: Text("Enter"))
+                              ],
+                            );
+                          });
                     },
                     child: Column(
                       children: [
@@ -124,19 +167,56 @@ class CreateJoinFamily extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
+                      TextEditingController controller =
+                          TextEditingController();
+                      // controller.text = "";
                       return showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return new AlertDialog(
                               title: new Text("Enter Head Family Email Id"),
-                              content: new TextFormField(
-                                initialValue: "Enter Id",
+                              content: Column(
+                                children: [
+                                  TextFormField(
+                                    decoration:
+                                        InputDecoration(labelText: "Enter Id"),
+                                    // initialValue: "Enter Id",
+                                  ),
+                                  TextFormField(
+                                    // h
+                                    decoration: InputDecoration(
+                                        labelText: "Enter Your Name"),
+                                    controller: controller,
+                                  ),
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: "Enter Your Name"),
+                                    // initialValue:
+                                    //     "Enter Your Name", //Radio Buttons for designation
+                                  ),
+                                ],
                               ),
                               actions: [
                                 TextButton(
-                                    onPressed: () {}, child: Text("Cancel")),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("Cancel")),
                                 TextButton(
-                                    onPressed: () {}, child: Text("Enter"))
+                                    onPressed: () {
+                                      if (controller.text.isEmpty)
+                                        WebResponseExtractor.showToast(
+                                            "Please Enter Your Name");
+                                      else {
+                                        userMain = controller.text.toString();
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Home(false)),
+                                        );
+                                      }
+                                    },
+                                    child: Text("Enter"))
                               ],
                             );
                           });

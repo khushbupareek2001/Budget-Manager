@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:personal_budget/models/web_response_extractor.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addTx;
@@ -9,10 +10,10 @@ class NewTransaction extends StatefulWidget {
   }
 
   @override
-  _NewTransactionState createState() { 
+  _NewTransactionState createState() {
     print('createState NewTransaction Widget');
     return _NewTransactionState();
-    }
+  }
 }
 
 class _NewTransactionState extends State<NewTransaction> {
@@ -44,7 +45,7 @@ class _NewTransactionState extends State<NewTransaction> {
 
   void _submitData() {
     if (_amountController.text.isEmpty) {
-      return;
+      return WebResponseExtractor.showToast("Please Enter Amount");
     }
 
     final enteredTitle = _titleController.text;
@@ -83,7 +84,7 @@ class _NewTransactionState extends State<NewTransaction> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-          child: Card(
+      child: Card(
         elevation: 5,
         child: Container(
           padding: EdgeInsets.only(
@@ -109,7 +110,7 @@ class _NewTransactionState extends State<NewTransaction> {
                 controller: _amountController,
 
                 keyboardType: TextInputType.number,
-                onSubmitted: (_) => _submitData(),
+                // onSubmitted: (_) => _submitData(),
               ),
               Container(
                 height: 70,
@@ -139,7 +140,7 @@ class _NewTransactionState extends State<NewTransaction> {
                 child: Text('Add Transaction'),
                 color: Theme.of(context).primaryColor,
                 textColor: Theme.of(context).textTheme.button.color,
-                onPressed: () => _submitData,
+                onPressed: _submitData,
                 // print(titleInput);
                 // print(amountInput);
 
