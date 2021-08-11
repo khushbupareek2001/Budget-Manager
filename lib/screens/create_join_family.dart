@@ -68,6 +68,7 @@ class CreateJoinFamily extends StatelessWidget {
                             // backgroundImage: const AssetImage(
                             //   "assets/images/men.jfif",
                             // ),
+                            backgroundColor: Colors.teal,
                             child: Icon(Icons.add),
                           ),
                         ),
@@ -81,8 +82,24 @@ class CreateJoinFamily extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Home()));
+                      return showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return new AlertDialog(
+                              title: new Text("Enter Head Family Email Id"),
+                              content: new TextFormField(
+                                initialValue: "Enter Id",
+                              ),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {}, child: Text("Cancel")),
+                                TextButton(
+                                    onPressed: () {}, child: Text("Enter"))
+                              ],
+                            );
+                          });
+                      // Navigator.of(context).push(
+                      //     MaterialPageRoute(builder: (context) => Home()));
                     },
                     child: Column(
                       children: [
@@ -90,9 +107,8 @@ class CreateJoinFamily extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: CircleAvatar(
                             radius: 60,
-                            backgroundImage: const AssetImage(
-                              "assets/images/women.jpg",
-                            ),
+                            child: Icon(Icons.family_restroom),
+                            backgroundColor: Colors.teal,
                             // child: Icon(Icons.join),
                           ),
                         ),
