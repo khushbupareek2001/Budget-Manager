@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "509410510459",
+    "project_id": "budegtmanager",
+    "storage_bucket": "budegtmanager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509410510459:android:6cd110789c4a517ad8c4de",
+        "android_client_info": {
+          "package_name": "com.example.personal_budget"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "509410510459-jbvf7rpu55imeq6cej7ce8a598f0u8et.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDK6QJ-6jE0kiHZ5Tzlb8-HKjTtbR9LokY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "509410510459-jbvf7rpu55imeq6cej7ce8a598f0u8et.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

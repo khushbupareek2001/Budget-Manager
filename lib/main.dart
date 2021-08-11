@@ -1,378 +1,131 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import './widgets/transaction_list.dart';
-import './widgets/new_transaction.dart';
-import './widgets/chart.dart';
+import 'package:personal_budget/screens/home.dart';
+import 'package:provider/provider.dart';
+// import 'package:silaiclub/screens/about_screen.dart';
+// import 'package:silaiclub/screens/chat_screen.dart';
+// import 'package:silaiclub/screens/intro_screen.dart';
+// import 'package:silaiclub/screens/orders.dart';
+// import 'package:silaiclub/screens/recent_chat.dart';
+import './screens/auth_screen.dart';
+// import './screens/category_screen.dart';
+// import './screens/gender_screen.dart';
+// import './screens/tailor_screen.dart';
+// import './widgets/dummy_category.dart';
+// import './widgets/tailors.dart';
+// import './screens/add_tailor.dart';
+import './models/auth.dart';
+// import './screens/book.dart';
+// import './widgets/bookdatas.dart';
+// import './screens/booking_request.dart';
+import 'package:firebase_core/firebase_core.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+// import 'dart:async';
 
-import './models/transaction.dart';
-// import './widgets/new_transaction.dart';
-// import './widgets/transaction_list.dart';
-// import 'package:intl/intl.dart';
+String userMain = "User";
+String userEmail = "User@gmail.com";
+String userUrl = "";
+bool checkSignup = false;
+String customerId;
 
-// import './models/transaction.dart';
-
-// void main() => runApp(MyApp());
-void main() {
-  // SystemChrome.setPreferredOrientations([
-  //   DeviceOrientation.portraitUp,
-  //   DeviceOrientation.portraitDown,
-  // ]);
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(SplashScreen());
 }
 
-class MyApp extends StatelessWidget {
+class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Personal Expenses',
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-        accentColor: Colors.amber,
-        // errorColor: Colors.red,
-        fontFamily: 'Quicksand',
-        textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle(
-                fontFamily: 'OpenSans',
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-              button: TextStyle(color: Colors.white),
-            ),
-        appBarTheme: AppBarTheme(
-          textTheme: ThemeData.light().textTheme.copyWith(
-                title: TextStyle(
-                  fontFamily: 'OpenSans',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+      debugShowCheckedModeBanner: false,
+      home: AnimatedSplashScreen(
+        splash: Container(
+          child: Image.asset(
+            "assets/images/splash.png",
+            fit: BoxFit.cover,
+          ),
         ),
+        nextScreen: MyApp(),
+        // backgroundColor: Colors.cyan,
+        splashTransition: SplashTransition.scaleTransition,
+        animationDuration: Duration(milliseconds: 300),
       ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  // final List<Transaction> transactions = [
-  //   Transaction(
-  //     id: 't1',
-  //     title: 'New Shoes',
-  //     amount: 70.23,
-  //     date: DateTime.now(),
-  //   ),
-  //   Transaction(
-  //     id: 't2',
-  //     title: 'Weekly Groceries',
-  //     amount: 20.12,
-  //     date: DateTime.now(),
-  //   ),
-  // ];
-
-  // String titleInput;
-  // String amountInput;
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-  // final titleController = TextEditingController();
-  // final amountController = TextEditingController();
-
-  final List<Transaction> _userTransactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'New Shoes',
-    //   amount: 70.23,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'Weekly Groceries',
-    //   amount: 20.12,
-    //   date: DateTime.now(),
-    // ),
-  ];
-  bool _showChart = false;
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addObserver(this); 
-    super.initState();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state){
-    print(state);
-  }
-
-  @override
-  dispose(){
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  List<Transaction> get _recentTransactions {
-    return _userTransactions.where((tx) {
-      return tx.date.isAfter(DateTime.now().subtract(
-        Duration(days: 7),
-      ));
-    }).toList();
-  }
-
-  void _addNewTransaction(
-      String txTitle, double txAmount, DateTime chosenDate) {
-    final newTx = Transaction(
-      id: DateTime.now().toString(),
-      title: txTitle,
-      amount: txAmount,
-      date: chosenDate,
-    );
-
-    setState(() {
-      _userTransactions.add(newTx);
-    });
-  }
-
-  void _startAddNewTransaction(BuildContext ctx) {
-    showModalBottomSheet(
-      context: ctx,
-      builder: (_) {
-        return GestureDetector(
-          onTap: () {},
-          behavior: HitTestBehavior.opaque,
-          child: NewTransaction(_addNewTransaction),
-        );
+      routes: {
+        // IntroScreen.routeName: (ctx) => IntroScreen(),
+        MyApp.routeName: (ctx) => MyApp(),
+        // ChatScreen.routeName: (ctx) => ChatScreen()
       },
     );
   }
+}
 
-  void _deleteTransaction(String id) {
-    setState(() {
-      _userTransactions.removeWhere((tx) {
-        return tx.id == id;
-      });
-    });
-  }
+class MyApp extends StatefulWidget {
+  static const routeName = "/myapp";
+  @override
+  _MyAppState createState() => _MyAppState();
+}
 
-  List<Widget> _buildLandscapeContent(
-    MediaQueryData mediaQuery,
-    AppBar appBar,
-    Widget txListWidget,
-  ) {
-    return [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Show Chart'),
-          Switch.adaptive(
-            value: _showChart,
-            onChanged: (val) {
-              setState(() {
-                _showChart = val;
-              });
-            },
-          ),
-        ],
-      ),
-      _showChart
-          ? Container(
-              height: (mediaQuery.size.height -
-                      appBar.preferredSize.height -
-                      mediaQuery.padding.top) *
-                  1,
-              child: Chart(_recentTransactions),
-            )
-          : txListWidget
-    ];
-  }
+class _MyAppState extends State<MyApp> {
+  // Future checkFirstSeen() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   bool _seen = (prefs.getBool('seen') ?? false);
 
-  List<Widget> _buildPortraitContent(
-    MediaQueryData mediaQuery,
-    AppBar appBar,
-    Widget txListWidget,
-  ) {
-    return [
-      Container(
-        height: (mediaQuery.size.height -
-                appBar.preferredSize.height -
-                mediaQuery.padding.top) *
-            0.3,
-        child: Chart(_recentTransactions),
-      ),
-      txListWidget
-    ];
-  }
+  //   if (_seen) {
+  //     AuthScreen();
+  //   } else {
+  //     await prefs.setBool('seen', true);
+  //     Navigator.pushNamed(context, IntroScreen.routeName);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final isLandscape = mediaQuery.orientation == Orientation.landscape;
-    final appBar = AppBar(
-      title: Text('Personal Expenses'),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () => _startAddNewTransaction(context),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
         ),
       ],
-    );
-    final txListWidget = Container(
-      height: (mediaQuery.size.height -
-              appBar.preferredSize.height -
-              mediaQuery.padding.top) *
-          0.7,
-      child: TransactionList(_userTransactions, _deleteTransaction),
-    );
-    return Scaffold(
-      appBar: appBar,
-      // appBar: AppBar(
-      //     title: Text('Personal Expenses'),
-      //     actions: <Widget>[
-      //       IconButton(
-      //         icon: Icon(Icons.add),
-      //         onPressed: () => _startAddNewTransaction(context),
-      //       ),
-      //     ],
-      // ),
-      body: SingleChildScrollView(
-        child: Column(
-          //mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            if (isLandscape)
-              ..._buildLandscapeContent(
-                mediaQuery,
-                appBar,
-                txListWidget,
-              ),
-            if (!isLandscape)
-              ..._buildPortraitContent(
-                mediaQuery,
-                appBar,
-                txListWidget,
-              ),
-
-            // : Container(
-            //     height: (MediaQuery.of(context).size.height -
-            //             appBar.preferredSize.height -
-            //             MediaQuery.of(context).padding.top) *
-            //         0.7,
-            //     child:
-            //         TransactionList(_userTransactions, _deleteTransaction),
-            //   ),
-
-            // Container(
-            //   width: double.infinity,
-            //   child: Card(
-            //     color: Colors.blue,
-            //     child: Text('CHART!'),
-            //     elevation: 5,
-            //   ),
-            // ),
-
-            // Card(
-            //   elevation: 5,
-            //   child: Container(
-            //     padding: EdgeInsets.all(10),
-            //     child: Column(
-            //       crossAxisAlignment: CrossAxisAlignment.end,
-            //       children: <Widget>[
-            //         TextField(
-            //           decoration: InputDecoration(labelText: 'Title'),
-            //           // onChanged: (val) {
-            //           //   titleInput = val;
-            //           // },
-            //           controller: titleController,
-            //         ),
-            //         TextField(
-            //           decoration: InputDecoration(labelText: 'Amount'),
-            //           // onChanged: (val) => amountInput = val,
-            //           controller: amountController,
-            //         ),
-            //         FlatButton(
-            //           child: Text('Add Transaction'),
-            //           textColor: Colors.purple,
-            //           onPressed: () {
-            //             // print(titleInput);
-            //             // print(amountInput);
-            //             print(titleController.text);
-            //           },
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-
-            // NewTransaction(),
-
-            // Card(
-            //   color: Colors.red,
-            //   child: Text('LIST OF TX'),
-            // ),
-            // Column(
-            //   children: transactions.map((tx) {
-            //     return Card(
-            //       child: Row(
-            //         children: <Widget>[
-            //           Container(
-            //             margin: EdgeInsets.symmetric(
-            //               vertical: 10,
-            //               horizontal: 15,
-            //             ),
-            //             decoration: BoxDecoration(
-            //               border: Border.all(
-            //                 color: Colors.purple,
-            //                 width: 2,
-            //               ),
-            //             ),
-            //             padding: EdgeInsets.all(10),
-            //             child: Text(
-            //               // tx.amount.toString(),
-            //               '\$${tx.amount}',
-            //               style: TextStyle(
-            //                 fontWeight: FontWeight.bold,
-            //                 fontSize: 20,
-            //                 color: Colors.purple,
-            //               ),
-            //             ),
-            //           ),
-            //           Column(
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: <Widget>[
-            //               Text(
-            //                 tx.title,
-            //                 style: TextStyle(
-            //                   fontSize: 16,
-            //                   fontWeight: FontWeight.bold,
-            //                 ),
-            //               ),
-            //               Text(
-            //                 // tx.date.toString(),
-            //                 // DateFormat('yyyy/MM/dd').format(tx.date),
-            //                 DateFormat.yMMMd().format(tx.date),
-            //                 style: TextStyle(
-            //                   color: Colors.grey,
-            //                 ),
-            //               ),
-            //             ],
-            //           )
-            //         ],
-            //       ),
-            //     );
-            //   }).toList(),
-            // ),
-
-            // TransactionList(),
-          ],
+      child: Consumer<Auth>(
+        builder: (ctx, auth, _) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'SilaiClub',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: auth.isAuth
+              ? Home()
+              : FutureBuilder(
+                  builder: (ctx, authresultSnapshot) =>
+                      authresultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? Center(child: CircularProgressIndicator())
+                          : AuthScreen(),
+                  future: auth.tryAutoLogin(),
+                ),
+          routes: {
+            // TailorScreen.routeName: (ctx) => TailorScreen(),
+            // AddTailor.routename: (ctx) => AddTailor(),
+            // CategoryScreen.routeName: (ctx) => CategoryScreen(),
+            // Book.routeName: (ctx) => Book(),
+            // BookingRequest.routeName: (ctx) => BookingRequest(false),
+            // GenderScreen.routeName: (ctx) => GenderScreen(),
+            // Orders.routeName: (ctx) => Orders(),
+            // About.routeName: (ctx) => About(),
+            // RecentChat.routeName: (ctx) => RecentChat()
+            // ChatScreen.routeName: (ctx) => ChatScreen()
+          },
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _startAddNewTransaction(context),
       ),
     );
   }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   new Timer(new Duration(milliseconds: 200), () {
+  //     checkFirstSeen();
+  //   });
+  // }
 }
