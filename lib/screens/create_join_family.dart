@@ -12,35 +12,77 @@ class CreateJoinFamily extends StatelessWidget {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.lime[50],
       body: Stack(children: [
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                // Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
+                // Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
+                Colors.blue[400],
+                Colors.lightBlue[50]
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [0, 1],
+            ),
+          ),
+        ),
         Positioned(
-          left: 0,
-          right: 0,
-          top: 0,
+          // left: width * 0.1,
+          // right: width * 0.1,
+          top: height * 0.1,
           child: Container(
-            height: height,
-            // decoration: BoxDecoration(
-            //   image: DecorationImage(
-            //       image: const AssetImage("assets/images/backlogo1.jpeg"),
-            //       fit: BoxFit.cover),
-            // ),
-            child: Container(
-              padding: EdgeInsets.only(left: width * 0.04, top: height * 0.12),
-              color: Color(0xFFEFEBE9).withOpacity(.65),
+            // height: height,
+            // width: width,
+            padding: EdgeInsets.all(width * 0.1),
+            child: Text(
+              "Welcome,",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w400,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          // left: width * 0.1,
+          // right: width * 0.1,
+          top: height * 0.15,
+          child: Container(
+            // height: height,
+            // width: width,
+            padding: EdgeInsets.all(width * 0.1),
+            child: Text(
+              "User Name",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),
         // Positioned(
-        //   left: height * 0.01,
-        //   right: height * 0.01,
-        //   top: height * 0.05,
-        //   // bottom: height * 0.5,
+        //   left: width * 0.01,
+        //   right: width * 0.03,
+        //   top: height * 0.25,
         //   child: Container(
+        //     // height: height,
+        //     // width: width,
         //     padding: EdgeInsets.all(width * 0.1),
-        //     child:Text(""),
+        //     child: Text(
+        //       "Record the details of your expenses and savings with your family",
+        //       textAlign: TextAlign.center,
+        //       style: TextStyle(
+        //         fontSize: 15,
+        //         fontWeight: FontWeight.w400,
+        //         fontStyle: FontStyle.italic,
+        //       ),
+        //     ),
         //   ),
-        //   // color: Color(0xFFEFEBE9).withOpacity(.55),
         // ),
         Container(
           width: MediaQuery.of(context).size.width,
@@ -49,7 +91,7 @@ class CreateJoinFamily extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: height * 0.08),
+              SizedBox(height: height * 0.1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -68,7 +110,7 @@ class CreateJoinFamily extends StatelessWidget {
                             // backgroundImage: const AssetImage(
                             //   "assets/images/men.jfif",
                             // ),
-                            backgroundColor: Colors.teal,
+                            backgroundColor: Colors.white,
                             child: Icon(Icons.add),
                           ),
                         ),
@@ -108,7 +150,7 @@ class CreateJoinFamily extends StatelessWidget {
                           child: CircleAvatar(
                             radius: 60,
                             child: Icon(Icons.family_restroom),
-                            backgroundColor: Colors.teal,
+                            backgroundColor: Colors.white,
                             // child: Icon(Icons.join),
                           ),
                         ),

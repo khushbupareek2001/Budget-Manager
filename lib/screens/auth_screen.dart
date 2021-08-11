@@ -178,21 +178,36 @@ class _AuthScreenState extends State<AuthScreen>
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          Positioned(
-            left: 0,
-            right: 0,
-            top: 0,
-            child: Container(
-              height: height,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: const AssetImage("assets/images/backlogo.jpg"),
-                    fit: BoxFit.cover),
-              ),
-              child: Container(
-                padding:
-                    EdgeInsets.only(left: width * 0.04, top: height * 0.12),
-                color: Color(0xFFEFEBE9).withOpacity(.35),
+          // Positioned(
+          //   left: 0,
+          //   right: 0,
+          //   top: 0,
+          //   child: Container(
+          //     height: height,
+          //     decoration: BoxDecoration(
+          //       image: DecorationImage(
+          //           image: const AssetImage("assets/images/backlogo.jpg"),
+          //           fit: BoxFit.cover),
+          //     ),
+          //     child: Container(
+          //       padding:
+          //           EdgeInsets.only(left: width * 0.04, top: height * 0.12),
+          //       color: Color(0xFFEFEBE9).withOpacity(.35),
+          //     ),
+          //   ),
+          // ),
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  // Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
+                  // Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
+                  Colors.blue[400],
+                  Colors.lightBlue[50]
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                stops: [0, 1],
               ),
             ),
           ),
