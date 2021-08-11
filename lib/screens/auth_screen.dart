@@ -186,7 +186,7 @@ class _AuthScreenState extends State<AuthScreen>
               height: height,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: const AssetImage("assets/images/backlogo.jpeg"),
+                    image: const AssetImage("assets/images/backlogo.jpg"),
                     fit: BoxFit.cover),
               ),
               child: Container(
@@ -197,13 +197,18 @@ class _AuthScreenState extends State<AuthScreen>
             ),
           ),
           Positioned(
-            left: height * 0.01,
-            right: height * 0.01,
-            top: height * 0.05,
+            left: width * 0.1,
+            right: width * 0.1,
+            top: height * 0.1,
             child: Container(
+              // height: height,
+              // width: width,
               padding: EdgeInsets.all(width * 0.1),
-              child: Image.asset("assets/images/TransparentLogo.png",
-                  fit: BoxFit.cover),
+              child: Text(
+                "Budget Manager",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
           AnimatedPositioned(

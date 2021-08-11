@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_budget/screens/create_join_family.dart';
 import 'package:personal_budget/screens/home.dart';
 import 'package:provider/provider.dart';
 // import 'package:silaiclub/screens/about_screen.dart';
@@ -41,8 +42,10 @@ class SplashScreen extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: AnimatedSplashScreen(
         splash: Container(
+          // width: MediaQuery.of(context).size.width * 0.5,
+          // height: MediaQuery.of(context).size.height * 0.5,
           child: Image.asset(
-            "assets/images/splash.png",
+            "assets/images/spash.jpg",
             fit: BoxFit.cover,
           ),
         ),
@@ -95,7 +98,7 @@ class _MyAppState extends State<MyApp> {
             primarySwatch: Colors.blue,
           ),
           home: auth.isAuth
-              ? Home()
+              ? CreateJoinFamily()
               : FutureBuilder(
                   builder: (ctx, authresultSnapshot) =>
                       authresultSnapshot.connectionState ==
