@@ -93,7 +93,7 @@ class _MyAppState extends State<MyApp> {
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'SilaiClub',
+          title: 'Budget Manager',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
