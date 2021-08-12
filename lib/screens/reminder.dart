@@ -128,6 +128,20 @@ class _ReminderState extends State<Reminder> {
             ),
           ),
         ),
+        SizedBox(
+          height: 20,
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.3,
+            ),
+            RaisedButton(
+              onPressed: () {},
+              child: Text("Add"),
+            ),
+          ],
+        )
       ],
     );
   }
