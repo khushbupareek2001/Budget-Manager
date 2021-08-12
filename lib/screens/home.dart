@@ -252,6 +252,14 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 ),
               ),
               ListTile(
+                leading: Icon(Icons.home),
+                title: const Text("Home"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              Divider(),
+              ListTile(
                 leading: Icon(Icons.attach_money_rounded),
                 title: const Text("Personal Expenses"),
                 onTap: () {

@@ -240,6 +240,14 @@ class _PersonalExpensesState extends State<PersonalExpenses>
               ),
               Divider(),
               ListTile(
+                leading: Icon(Icons.attach_money_rounded),
+                title: const Text("Personal Expenses"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              Divider(),
+              ListTile(
                 leading: Icon(Icons.favorite),
                 title: const Text("WishList"),
                 onTap: () {
