@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:personal_budget/main.dart';
 import 'package:personal_budget/screens/personal_expenses.dart';
+import 'package:personal_budget/screens/wishlist.dart';
 import '../widgets/transaction_list.dart';
 import '../widgets/new_transaction.dart';
 import '../widgets/chart.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../models/auth.dart';
 import '../models/transaction.dart';
 import 'package:share/share.dart';
+import 'package:personal_budget/main.dart';
 
 class Home extends StatefulWidget {
   bool isCreate;
@@ -22,7 +24,10 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: {"/personal_expenses": (ctx) => PersonalExpenses()},
+      routes: {
+        "/personal_expenses": (ctx) => PersonalExpenses(),
+        "/wishlist": (ctx) => WishList()
+      },
       title: 'Budget Manager',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -57,7 +62,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-  final List<Transaction> _userTransactions = [];
   bool _showChart = false;
 
   @override
@@ -78,43 +82,43 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   List<Transaction> get _recentTransactions {
-    return _userTransactions.where((tx) {
+    return userTransactions.where((tx) {
       return tx.date.isAfter(DateTime.now().subtract(
         Duration(days: 7),
       ));
     }).toList();
   }
 
-  void _addNewTransaction(
-      String txTitle, double txAmount, DateTime chosenDate) {
-    final newTx = Transaction(
-      id: DateTime.now().toString(),
-      title: txTitle,
-      amount: txAmount,
-      date: chosenDate,
-    );
+  // void _addNewTransaction(
+  //     String txTitle, double txAmount, DateTime chosenDate) {
+  //   final newTx = Transaction(
+  //     id: DateTime.now().toString(),
+  //     title: txTitle,
+  //     amount: txAmount,
+  //     date: chosenDate,
+  //   );
 
-    setState(() {
-      _userTransactions.add(newTx);
-    });
-  }
+  //   setState(() {
+  //     userTransactions.add(newTx);
+  //   });
+  // }
 
-  void _startAddNewTransaction(BuildContext ctx) {
-    showModalBottomSheet(
-      context: ctx,
-      builder: (_) {
-        return GestureDetector(
-          onTap: () {},
-          behavior: HitTestBehavior.opaque,
-          child: NewTransaction(_addNewTransaction),
-        );
-      },
-    );
-  }
+  // void _startAddNewTransaction(BuildContext ctx) {
+  //   showModalBottomSheet(
+  //     context: ctx,
+  //     builder: (_) {
+  //       return GestureDetector(
+  //         onTap: () {},
+  //         behavior: HitTestBehavior.opaque,
+  //         child: NewTransaction(_addNewTransaction),
+  //       );
+  //     },
+  //   );
+  // }
 
   void _deleteTransaction(String id) {
     setState(() {
-      _userTransactions.removeWhere((tx) {
+      userTransactions.removeWhere((tx) {
         return tx.id == id;
       });
     });
@@ -175,19 +179,19 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text('Budget Manager'),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () => _startAddNewTransaction(context),
-        ),
-      ],
+      // actions: <Widget>[
+      //   IconButton(
+      //     icon: Icon(Icons.add),
+      //     onPressed: () => _startAddNewTransaction(context),
+      //   ),
+      // ],
     );
     final txListWidget = Container(
       height: (mediaQuery.size.height -
               appBar.preferredSize.height -
               mediaQuery.padding.top) *
           0.7,
-      child: TransactionList(_userTransactions, _deleteTransaction),
+      child: TransactionList(userTransactions, _deleteTransaction),
     );
     return Scaffold(
       appBar: appBar,
@@ -237,6 +241,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                         userEmail == null ? "user@gmail.com" : userEmail,
                         style: TextStyle(fontSize: 15, color: Colors.white),
                       ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01),
+                      Text(
+                        "Remaining Income: \$" + familyMoney.toString(),
+                        style: TextStyle(fontSize: 15, color: Colors.white),
+                      ),
                     ],
                   ),
                 ),
@@ -245,7 +255,19 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 leading: Icon(Icons.attach_money_rounded),
                 title: const Text("Personal Expenses"),
                 onTap: () {
-                  Navigator.of(context).pushNamed("/personal_expenses");
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => PersonalExpenses(),
+                    ),
+                  );
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.favorite),
+                title: const Text("WishList"),
+                onTap: () {
+                  Navigator.of(context).pushNamed("/wishlist");
                 },
               ),
               Divider(),
@@ -313,11 +335,11 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _startAddNewTransaction(context),
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.add),
+      //   onPressed: () => _startAddNewTransaction(context),
+      // ),
     );
   }
 }

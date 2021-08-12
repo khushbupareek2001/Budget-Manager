@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import './chart_bar.dart';
 import '../models/transaction.dart';
+import 'package:personal_budget/main.dart';
 
 class Chart extends StatelessWidget {
   final List<Transaction> recentTransactions;
@@ -42,28 +43,40 @@ class Chart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // print(groupedTransactionValues);
-    return Card(
-      elevation: 5,
-      margin: EdgeInsets.all(20),
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: groupedTransactionValues.map((data) {
-            // return Text('${data['day']}: ${data['amount']}');
-            return Flexible(
-              fit: FlexFit.tight,
-              child: ChartBar(
-                data['day'],
-                data['amount'],
-                totalSpending == 0.0
-                    ? 0.0
-                    : (data['amount'] as double) / totalSpending,
-              ),
-            );
-          }).toList(),
+    return Column(
+      children: [
+        SizedBox(
+          height: 20,
         ),
-      ),
+        Text("Remaining Income: \$" + familyMoney.toString()),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.2,
+          child: Card(
+            elevation: 5,
+            margin: EdgeInsets.all(20),
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: groupedTransactionValues.map((data) {
+                  // return Text('${data['day']}: ${data['amount']}');
+                  return Flexible(
+                    fit: FlexFit.tight,
+                    child: ChartBar(
+                      data['day'],
+                      data['amount'],
+                      totalSpending == 0.0
+                          ? 0.0
+                          : (data['amount'] as double) / totalSpending,
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

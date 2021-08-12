@@ -21,6 +21,7 @@ import './models/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import './models/transaction.dart';
 // import 'dart:async';
 
 String userMain = "User";
@@ -28,6 +29,20 @@ String userEmail = "User@gmail.com";
 String userUrl = "";
 bool checkSignup = false;
 String customerId;
+
+// class WishList {
+//   String title;
+//   String amount;
+//   // String quantity;
+//   String date;
+
+//   WishList(@required this.title, @required this.amount, @required this.date);
+// }
+
+List<Transaction> wishList = [];
+List<Transaction> userTransactions = [];
+List<Transaction> personalTransactions = [];
+int familyMoney = 0;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

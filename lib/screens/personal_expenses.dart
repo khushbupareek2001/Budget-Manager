@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import '../widgets/transaction_list.dart';
 import '../widgets/new_transaction.dart';
 import '../widgets/chart.dart';
-
+import 'package:personal_budget/main.dart';
 import '../models/transaction.dart';
 
 class PersonalExpenses extends StatefulWidget {
@@ -15,7 +15,7 @@ class PersonalExpenses extends StatefulWidget {
 
 class _PersonalExpensesState extends State<PersonalExpenses>
     with WidgetsBindingObserver {
-  final List<Transaction> _userTransactions = [];
+  // final  = [];
   bool _showChart = false;
 
   @override
@@ -36,7 +36,7 @@ class _PersonalExpensesState extends State<PersonalExpenses>
   }
 
   List<Transaction> get _recentTransactions {
-    return _userTransactions.where((tx) {
+    return personalTransactions.where((tx) {
       return tx.date.isAfter(DateTime.now().subtract(
         Duration(days: 7),
       ));
@@ -53,7 +53,21 @@ class _PersonalExpensesState extends State<PersonalExpenses>
     );
 
     setState(() {
-      _userTransactions.add(newTx);
+      personalTransactions.add(newTx);
+    });
+  }
+
+  void _addNewWishTransaction(
+      String txTitle, double txAmount, DateTime chosenDate) {
+    final newTx = Transaction(
+      id: DateTime.now().toString(),
+      title: txTitle,
+      amount: txAmount,
+      date: chosenDate,
+    );
+
+    setState(() {
+      wishList.add(newTx);
     });
   }
 
@@ -64,7 +78,7 @@ class _PersonalExpensesState extends State<PersonalExpenses>
         return GestureDetector(
           onTap: () {},
           behavior: HitTestBehavior.opaque,
-          child: NewTransaction(_addNewTransaction),
+          child: NewTransaction(_addNewTransaction, _addNewWishTransaction),
         );
       },
     );
@@ -72,7 +86,7 @@ class _PersonalExpensesState extends State<PersonalExpenses>
 
   void _deleteTransaction(String id) {
     setState(() {
-      _userTransactions.removeWhere((tx) {
+      personalTransactions.removeWhere((tx) {
         return tx.id == id;
       });
     });
@@ -146,7 +160,7 @@ class _PersonalExpensesState extends State<PersonalExpenses>
               appBar.preferredSize.height -
               mediaQuery.padding.top) *
           0.7,
-      child: TransactionList(_userTransactions, _deleteTransaction),
+      child: TransactionList(personalTransactions, _deleteTransaction),
     );
     return Scaffold(
       appBar: appBar,

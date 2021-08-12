@@ -4,8 +4,9 @@ import 'package:personal_budget/models/web_response_extractor.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addTx;
+  final Function addTx1;
 
-  NewTransaction(this.addTx) {
+  NewTransaction(this.addTx, this.addTx1) {
     print('Constructor NewTransaction Widget');
   }
 
@@ -56,6 +57,27 @@ class _NewTransactionState extends State<NewTransaction> {
     }
 
     widget.addTx(
+      enteredTitle,
+      enteredAmount,
+      _selectedDate,
+    );
+
+    Navigator.of(context).pop();
+  }
+
+  void _submitWishListData() {
+    if (_amountController.text.isEmpty) {
+      return WebResponseExtractor.showToast("Please Enter Amount");
+    }
+
+    final enteredTitle = _titleController.text;
+    final enteredAmount = double.parse(_amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
+      return;
+    }
+
+    widget.addTx1(
       enteredTitle,
       enteredAmount,
       _selectedDate,
@@ -136,20 +158,43 @@ class _NewTransactionState extends State<NewTransaction> {
                   ],
                 ),
               ),
-              RaisedButton(
-                child: Text('Add Transaction'),
-                color: Theme.of(context).primaryColor,
-                textColor: Theme.of(context).textTheme.button.color,
-                onPressed: _submitData,
-                // print(titleInput);
-                // print(amountInput);
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RaisedButton(
+                    child: Text('Add to Wishlist'),
+                    color: Theme.of(context).primaryColor,
+                    textColor: Theme.of(context).textTheme.button.color,
+                    onPressed: _submitData,
+                    // print(titleInput);
+                    // print(amountInput);
 
-                // print(titleController.text);
+                    // print(titleController.text);
 
-                // addTx(
-                //   titleController.text,
-                //   double.parse(amountController.text),
-                // );
+                    // addTx(
+                    //   titleController.text,
+                    //   double.parse(amountController.text),
+                    // );
+                  ),
+                  // SizedBox(
+                  //   width: MediaQuery.of(context).size.width * 0.02,
+                  // ),
+                  RaisedButton(
+                    child: Text('Add Transaction'),
+                    color: Theme.of(context).primaryColor,
+                    textColor: Theme.of(context).textTheme.button.color,
+                    onPressed: _submitData,
+                    // print(titleInput);
+                    // print(amountInput);
+
+                    // print(titleController.text);
+
+                    // addTx(
+                    //   titleController.text,
+                    //   double.parse(amountController.text),
+                    // );
+                  ),
+                ],
               ),
             ],
           ),

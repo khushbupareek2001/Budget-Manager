@@ -154,11 +154,15 @@ class CreateJoinFamily extends StatelessWidget {
                                           "Please Enter Role in the family");
                                     else {
                                       userMain = controller.text.toString();
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => Home(true),
-                                        ),
-                                      );
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) => Home(true)),
+                                          (Route<dynamic> route) => false);
+                                      // Navigator.of(context).push(
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) => ,
+                                      //   ),
+                                      // );
                                     }
                                   },
                                   child: Text("Done"),
@@ -248,11 +252,13 @@ class CreateJoinFamily extends StatelessWidget {
                                             "Please Enter Your Role in the family");
                                       else {
                                         userMain = controller.text.toString();
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Home(false)),
-                                        );
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Home(false)),
+                                                (Route<dynamic> route) =>
+                                                    false);
                                       }
                                     },
                                     child: Text("Done"))
