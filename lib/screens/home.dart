@@ -191,7 +191,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               appBar.preferredSize.height -
               mediaQuery.padding.top) *
           0.7,
-      child: TransactionList(userTransactions, _deleteTransaction),
+      child: TransactionList(personalTransactions, _deleteTransaction, false),
     );
     return Scaffold(
       appBar: appBar,
@@ -244,7 +244,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.01),
                       Text(
-                        "Remaining Income: \$" + familyMoney.toString(),
+                        "Remaining Income: ₹" + familyMoney.toString(),
                         style: TextStyle(fontSize: 15, color: Colors.white),
                       ),
                     ],

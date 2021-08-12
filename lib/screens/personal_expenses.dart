@@ -1,14 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:personal_budget/screens/home.dart';
 import '../widgets/transaction_list.dart';
 import '../widgets/new_transaction.dart';
 import '../widgets/chart.dart';
 import 'package:personal_budget/main.dart';
 import '../models/transaction.dart';
+import 'package:provider/provider.dart';
+import '../models/auth.dart';
+import 'package:share/share.dart';
 
 class PersonalExpenses extends StatefulWidget {
   static const routeName = "/personal_expenses";
+  bool isCreate;
+  PersonalExpenses([this.isCreate]);
   @override
   _PersonalExpensesState createState() => _PersonalExpensesState();
 }
@@ -160,10 +166,131 @@ class _PersonalExpensesState extends State<PersonalExpenses>
               appBar.preferredSize.height -
               mediaQuery.padding.top) *
           0.7,
-      child: TransactionList(personalTransactions, _deleteTransaction),
+      child: TransactionList(personalTransactions, _deleteTransaction, true),
     );
     return Scaffold(
       appBar: appBar,
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 40),
+                height: MediaQuery.of(context).size.height * 0.28,
+                //color: Colors.brown[400],
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.blue[400],
+                      Colors.lightBlue[100],
+                    ],
+                  ),
+                ),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: (userUrl == null || userUrl == "")
+                                ? AssetImage("assets/images/uservector.jpg")
+                                : NetworkImage(
+                                    userUrl,
+                                  ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01),
+                      Text(
+                        userMain == null ? "User123" : userMain,
+                        style: TextStyle(fontSize: 22, color: Colors.white),
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.002),
+                      Text(
+                        userEmail == null ? "user@gmail.com" : userEmail,
+                        style: TextStyle(fontSize: 15, color: Colors.white),
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01),
+                      Text(
+                        "Remaining Income: ₹" + familyMoney.toString(),
+                        style: TextStyle(fontSize: 15, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.home),
+                title: const Text("Home"),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Home(widget.isCreate),
+                    ),
+                  );
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.favorite),
+                title: const Text("WishList"),
+                onTap: () {
+                  Navigator.of(context).pushNamed("/wishlist");
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.share),
+                title: const Text("Share"),
+                onTap: () {
+                  final RenderBox renderBox = context.findRenderObject();
+
+                  Share.share(
+                    'Hello User, Please Download the App Now:\n',
+                    sharePositionOrigin:
+                        renderBox.localToGlobal(Offset.zero) & renderBox.size,
+                  );
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.info),
+                title: const Text("About"),
+                onTap: () {
+                  // Navigator.of(context).pushNamed(About.routeName);
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.feedback),
+                title: const Text("FeedBack"),
+                onTap: () {
+                  final email = "himanshudasingh@gmail.com";
+                  // launch("mailto:$email?subject=Feedback");
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.exit_to_app),
+                title: const Text("Logout"),
+                onTap: () {
+                  Provider.of<Auth>(context, listen: false).logout();
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacementNamed("/");
+                },
+              ),
+              Divider(),
+            ],
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.start,

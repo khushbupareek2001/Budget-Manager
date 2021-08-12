@@ -104,13 +104,15 @@ class CreateJoinFamily extends StatelessWidget {
                           TextEditingController();
                       TextEditingController controller2 =
                           TextEditingController();
+                      TextEditingController controller3 =
+                          TextEditingController();
                       return showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return new AlertDialog(
                               title: new Text("Personal Details"),
                               content: SizedBox(
-                                height: height * 0.3,
+                                height: height * 0.4,
                                 child: Column(
                                   children: [
                                     TextFormField(
@@ -132,6 +134,15 @@ class CreateJoinFamily extends StatelessWidget {
                                       ),
                                       controller: controller2,
                                     ),
+                                    TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        labelText: "Enter your Monthly Salary",
+                                      ),
+                                      controller: controller3,
+                                      // initialValue:
+                                      //     "Enter Your Name", //Radio Buttons for designation
+                                    ),
                                   ],
                                 ),
                               ),
@@ -152,8 +163,18 @@ class CreateJoinFamily extends StatelessWidget {
                                     else if (controller2.text.isEmpty)
                                       WebResponseExtractor.showToast(
                                           "Please Enter Role in the family");
+                                    else if (controller3.text.isEmpty)
+                                      WebResponseExtractor.showToast(
+                                          "Please Enter Your Income");
                                     else {
                                       userMain = controller.text.toString();
+                                      familyMoney =
+                                          (int.parse(controller3.text) !=
+                                                      null &&
+                                                  int.parse(controller3.text) !=
+                                                      0)
+                                              ? int.parse(controller3.text)
+                                              : 500;
                                       Navigator.of(context).pushAndRemoveUntil(
                                           MaterialPageRoute(
                                               builder: (context) => Home(true)),
@@ -200,6 +221,9 @@ class CreateJoinFamily extends StatelessWidget {
                           TextEditingController();
                       TextEditingController controller2 =
                           TextEditingController();
+                      TextEditingController controller3 =
+                          TextEditingController();
+
                       // controller.text = "";
                       return showDialog(
                           context: context,
@@ -230,6 +254,15 @@ class CreateJoinFamily extends StatelessWidget {
                                       // initialValue:
                                       //     "Enter Your Name", //Radio Buttons for designation
                                     ),
+                                    TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        labelText: "Enter your Monthly Salary",
+                                      ),
+                                      controller: controller3,
+                                      // initialValue:
+                                      //     "Enter Your Name", //Radio Buttons for designation
+                                    ),
                                   ],
                                 ),
                               ),
@@ -252,6 +285,13 @@ class CreateJoinFamily extends StatelessWidget {
                                             "Please Enter Your Role in the family");
                                       else {
                                         userMain = controller.text.toString();
+                                        familyMoney = (int.parse(
+                                                        controller3.text) !=
+                                                    null &&
+                                                int.parse(controller3.text) !=
+                                                    0)
+                                            ? int.parse(controller3.text)
+                                            : 500;
                                         Navigator.of(context)
                                             .pushAndRemoveUntil(
                                                 MaterialPageRoute(

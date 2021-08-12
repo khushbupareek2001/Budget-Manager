@@ -10,10 +10,12 @@ class TransactionItem extends StatefulWidget {
     Key key,
     @required this.transaction,
     @required this.deleteTx,
+    @required this.checkPlease,
   }) : super(key: key);
 
   final Transaction transaction;
   final Function deleteTx;
+  final bool checkPlease;
 
   @override
   _TransactionItemState createState() => _TransactionItemState();
@@ -50,7 +52,7 @@ class _TransactionItemState extends State<TransactionItem> {
           child: Padding(
             padding: const EdgeInsets.all(6),
             child: FittedBox(
-              child: Text('\$${widget.transaction.amount}'),
+              child: Text('₹${widget.transaction.amount}'),
             ),
           ),
         ),
@@ -61,18 +63,20 @@ class _TransactionItemState extends State<TransactionItem> {
         subtitle: Text(
           DateFormat.yMMMd().format(widget.transaction.date),
         ),
-        trailing: MediaQuery.of(context).size.width > 360
-            ? FlatButton.icon(
-                icon: const Icon(Icons.delete),
-                label: const Text('Delete'),
-                textColor: Theme.of(context).errorColor,
-                onPressed: () => widget.deleteTx(widget.transaction.id),
-              )
-            : IconButton(
-                icon: const Icon(Icons.delete),
-                color: Theme.of(context).errorColor,
-                onPressed: () => widget.deleteTx(widget.transaction.id),
-              ),
+        trailing: widget.checkPlease
+            ? MediaQuery.of(context).size.width > 360
+                ? FlatButton.icon(
+                    icon: const Icon(Icons.delete),
+                    label: const Text('Delete'),
+                    textColor: Theme.of(context).errorColor,
+                    onPressed: () => widget.deleteTx(widget.transaction.id),
+                  )
+                : IconButton(
+                    icon: const Icon(Icons.delete),
+                    color: Theme.of(context).errorColor,
+                    onPressed: () => widget.deleteTx(widget.transaction.id),
+                  )
+            : Icon(Icons.arrow_right),
       ),
     );
   }

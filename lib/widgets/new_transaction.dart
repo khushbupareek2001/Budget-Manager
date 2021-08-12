@@ -165,7 +165,7 @@ class _NewTransactionState extends State<NewTransaction> {
                     child: Text('Add to Wishlist'),
                     color: Theme.of(context).primaryColor,
                     textColor: Theme.of(context).textTheme.button.color,
-                    onPressed: _submitData,
+                    onPressed: _submitWishListData,
                     // print(titleInput);
                     // print(amountInput);
 

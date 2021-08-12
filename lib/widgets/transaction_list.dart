@@ -7,8 +7,9 @@ import './transaction_item.dart';
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
   final Function deleteTx;
+  bool checkplease = true;
 
-  TransactionList(this.transactions, this.deleteTx);
+  TransactionList(this.transactions, this.deleteTx, this.checkplease);
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +97,7 @@ class TransactionList extends StatelessWidget {
                       key: ValueKey(tx.id),
                       transaction: tx,
                       deleteTx: deleteTx,
+                      checkPlease: checkplease,
                     ))
                 .toList()
 

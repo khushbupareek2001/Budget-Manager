@@ -42,7 +42,7 @@ String customerId;
 List<Transaction> wishList = [];
 List<Transaction> userTransactions = [];
 List<Transaction> personalTransactions = [];
-int familyMoney = 0;
+int familyMoney = 500;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
