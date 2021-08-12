@@ -100,25 +100,40 @@ class CreateJoinFamily extends StatelessWidget {
                     onTap: () {
                       TextEditingController controller =
                           TextEditingController();
+                      TextEditingController controller1 =
+                          TextEditingController();
+                      TextEditingController controller2 =
+                          TextEditingController();
                       return showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return new AlertDialog(
                               title: new Text("Personal Details"),
-                              content: Column(
-                                children: [
-                                  TextFormField(
-                                    decoration: InputDecoration(
-                                        labelText: "Family Head Name"),
-                                    // initialValue: "",
-                                    controller: controller,
-                                  ),
-                                  TextFormField(
-                                    decoration: InputDecoration(
+                              content: SizedBox(
+                                height: height * 0.3,
+                                child: Column(
+                                  children: [
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                          labelText: "Family Head Name"),
+                                      // initialValue: "",
+                                      controller: controller,
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        labelText: "Email Id",
+                                      ), //Radio Buttons for designation
+                                      controller: controller1,
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
                                         labelText:
-                                            "Enter Id"), //Radio Buttons for designation
-                                  ),
-                                ],
+                                            "Role in the family(Eg. Father, Mother)",
+                                      ),
+                                      controller: controller2,
+                                    ),
+                                  ],
+                                ),
                               ),
                               actions: [
                                 TextButton(
@@ -127,19 +142,27 @@ class CreateJoinFamily extends StatelessWidget {
                                     },
                                     child: Text("Cancel")),
                                 TextButton(
-                                    onPressed: () {
-                                      if (controller.text.isEmpty)
-                                        WebResponseExtractor.showToast(
-                                            "Please Enter Your Name");
-                                      else {
-                                        userMain = controller.text.toString();
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) => Home(true)),
-                                        );
-                                      }
-                                    },
-                                    child: Text("Enter"))
+                                  onPressed: () {
+                                    if (controller.text.isEmpty)
+                                      WebResponseExtractor.showToast(
+                                          "Please Enter Family Head Name");
+                                    else if (controller1.text.isEmpty)
+                                      WebResponseExtractor.showToast(
+                                          "Please Enter Email Id");
+                                    else if (controller2.text.isEmpty)
+                                      WebResponseExtractor.showToast(
+                                          "Please Enter Role in the family");
+                                    else {
+                                      userMain = controller.text.toString();
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => Home(true),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  child: Text("Done"),
+                                )
                               ],
                             );
                           });
@@ -169,32 +192,42 @@ class CreateJoinFamily extends StatelessWidget {
                     onTap: () {
                       TextEditingController controller =
                           TextEditingController();
+                      TextEditingController controller1 =
+                          TextEditingController();
+                      TextEditingController controller2 =
+                          TextEditingController();
                       // controller.text = "";
                       return showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return new AlertDialog(
-                              title: new Text("Enter Head Family Email Id"),
-                              content: Column(
-                                children: [
-                                  TextFormField(
-                                    decoration:
-                                        InputDecoration(labelText: "Enter Id"),
-                                    // initialValue: "Enter Id",
-                                  ),
-                                  TextFormField(
-                                    // h
-                                    decoration: InputDecoration(
-                                        labelText: "Enter Your Name"),
-                                    controller: controller,
-                                  ),
-                                  TextFormField(
-                                    decoration: InputDecoration(
-                                        labelText: "Enter Your Name"),
-                                    // initialValue:
-                                    //     "Enter Your Name", //Radio Buttons for designation
-                                  ),
-                                ],
+                              title: new Text("Details"),
+                              content: SizedBox(
+                                height: height * 0.4,
+                                child: Column(
+                                  children: [
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                          labelText: "Family Head Email Id"),
+                                      // initialValue: "Enter Id",
+                                      controller: controller,
+                                    ),
+                                    TextFormField(
+                                      // h
+                                      decoration: InputDecoration(
+                                          labelText: "Enter Your Name"),
+                                      controller: controller1,
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        labelText: "Role in the family",
+                                      ),
+                                      controller: controller2,
+                                      // initialValue:
+                                      //     "Enter Your Name", //Radio Buttons for designation
+                                    ),
+                                  ],
+                                ),
                               ),
                               actions: [
                                 TextButton(
@@ -206,7 +239,13 @@ class CreateJoinFamily extends StatelessWidget {
                                     onPressed: () {
                                       if (controller.text.isEmpty)
                                         WebResponseExtractor.showToast(
+                                            "Please Enter Family Head Email Id");
+                                      else if (controller1.text.isEmpty)
+                                        WebResponseExtractor.showToast(
                                             "Please Enter Your Name");
+                                      else if (controller2.text.isEmpty)
+                                        WebResponseExtractor.showToast(
+                                            "Please Enter Your Role in the family");
                                       else {
                                         userMain = controller.text.toString();
                                         Navigator.of(context).push(
@@ -216,7 +255,7 @@ class CreateJoinFamily extends StatelessWidget {
                                         );
                                       }
                                     },
-                                    child: Text("Enter"))
+                                    child: Text("Done"))
                               ],
                             );
                           });
