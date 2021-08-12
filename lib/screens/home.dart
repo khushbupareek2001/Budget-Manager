@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:personal_budget/main.dart';
 import 'package:personal_budget/screens/personal_expenses.dart';
+import 'package:personal_budget/screens/reminder.dart';
 import 'package:personal_budget/screens/wishlist.dart';
 import '../widgets/transaction_list.dart';
 import '../widgets/new_transaction.dart';
@@ -26,7 +27,8 @@ class _HomeState extends State<Home> {
     return MaterialApp(
       routes: {
         "/personal_expenses": (ctx) => PersonalExpenses(),
-        "/wishlist": (ctx) => WishList()
+        "/wishlist": (ctx) => WishList(),
+        "/reminder": (ctx) => Reminder(),
       },
       title: 'Budget Manager',
       theme: ThemeData(
@@ -268,6 +270,14 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 title: const Text("WishList"),
                 onTap: () {
                   Navigator.of(context).pushNamed("/wishlist");
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.favorite),
+                title: const Text("Reminder"),
+                onTap: () {
+                  Navigator.of(context).pushNamed("/reminder");
                 },
               ),
               Divider(),
