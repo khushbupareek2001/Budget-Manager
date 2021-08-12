@@ -168,13 +168,13 @@ class CreateJoinFamily extends StatelessWidget {
                                           "Please Enter Your Income");
                                     else {
                                       userMain = controller.text.toString();
-                                      familyMoney =
-                                          (int.parse(controller3.text) !=
-                                                      null &&
-                                                  int.parse(controller3.text) !=
-                                                      0)
-                                              ? int.parse(controller3.text)
-                                              : 500;
+                                      familyMoney = (double.parse(
+                                                      controller3.text) !=
+                                                  null &&
+                                              double.parse(controller3.text) !=
+                                                  0)
+                                          ? double.parse(controller3.text)
+                                          : 500;
                                       Navigator.of(context).pushAndRemoveUntil(
                                           MaterialPageRoute(
                                               builder: (context) => Home(true)),
@@ -285,13 +285,14 @@ class CreateJoinFamily extends StatelessWidget {
                                             "Please Enter Your Role in the family");
                                       else {
                                         userMain = controller.text.toString();
-                                        familyMoney = (int.parse(
-                                                        controller3.text) !=
-                                                    null &&
-                                                int.parse(controller3.text) !=
-                                                    0)
-                                            ? int.parse(controller3.text)
-                                            : 500;
+                                        familyMoney =
+                                            (double.parse(controller3.text) !=
+                                                        null &&
+                                                    double.parse(
+                                                            controller3.text) !=
+                                                        0)
+                                                ? double.parse(controller3.text)
+                                                : 500;
                                         Navigator.of(context)
                                             .pushAndRemoveUntil(
                                                 MaterialPageRoute(

@@ -93,6 +93,7 @@ class _PersonalExpensesState extends State<PersonalExpenses>
   void _deleteTransaction(String id) {
     setState(() {
       personalTransactions.removeWhere((tx) {
+        familyMoney = familyMoney + tx.amount;
         return tx.id == id;
       });
     });

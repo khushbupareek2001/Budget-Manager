@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:personal_budget/main.dart';
 import 'package:personal_budget/models/web_response_extractor.dart';
 
 class NewTransaction extends StatefulWidget {
@@ -55,6 +56,8 @@ class _NewTransactionState extends State<NewTransaction> {
     if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
       return;
     }
+
+    familyMoney = familyMoney - enteredAmount;
 
     widget.addTx(
       enteredTitle,
