@@ -1,3 +1,4 @@
+import 'package:draw_graph/models/feature.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,7 @@ import '../models/transaction.dart';
 import 'package:share/share.dart';
 import 'package:personal_budget/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:draw_graph/draw_graph.dart';
 
 class Home extends StatefulWidget {
   bool isCreate;
@@ -21,6 +23,13 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
+
+// class Feature {
+//   String title;
+//   Color color;
+//   List<double> data;
+//   Feature(this.title, this.color, this.data);
+// }
 
 class _HomeState extends State<Home> {
   @override
@@ -66,6 +75,34 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   bool _showChart = false;
+  final Color darkBlue = Color.fromARGB(255, 18, 32, 47);
+  final List<Feature> features = [
+    Feature(
+      title: "Total Expenditure",
+      color: Colors.green,
+      data: [0.2, 0.8, 0.4, 0.7, 0.6],
+    ),
+    Feature(
+      title: "Remaining Income",
+      color: Colors.red,
+      data: [1, 0.8, 0.6, 0.7, 0.3],
+    ),
+    // Feature(
+    //   title: "Study",
+    //   color: Colors.cyan,
+    //   data: [0.5, 0.4, 0.85, 0.4, 0.7],
+    // ),
+    // Feature(
+    //   title: "Water Plants",
+    //   color: Colors.green,
+    //   data: [0.6, 0.2, 0, 0.1, 1],
+    // ),
+    // Feature(
+    //   title: "Grocery Shopping",
+    //   color: Colors.amber,
+    //   data: [0.25, 1, 0.3, 0.8, 0.6],
+    // ),
+  ];
 
   @override
   void initState() {
@@ -163,7 +200,35 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       appBar.preferredSize.height -
                       mediaQuery.padding.top) *
                   1,
-              child: Chart(_recentTransactions),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 64.0),
+                    child: Text(
+                      "Tasks Track",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 2,
+                      ),
+                    ),
+                  ),
+                  LineGraph(
+                    features: features,
+                    size: Size(320, 300),
+                    labelX: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
+                    labelY: ['20%', '40%', '60%', '80%', '100%'],
+                    showDescription: true,
+                    graphColor: Colors.white30,
+                  ),
+                  SizedBox(
+                    height: 50,
+                  )
+                ],
+              ),
             )
           : txListWidget
     ];
@@ -179,8 +244,26 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         height: (mediaQuery.size.height -
                 appBar.preferredSize.height -
                 mediaQuery.padding.top) *
-            0.3,
-        child: Chart(_recentTransactions),
+            0.4,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            // Container(),
+            LineGraph(
+              features: features,
+              size: Size(MediaQuery.of(context).size.width,
+                  MediaQuery.of(context).size.height * 0.3),
+              labelX: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
+              labelY: ['20%', '40%', '60%', '80%', '100%'],
+              showDescription: true,
+              graphColor: Colors.white30,
+            ),
+            // SizedBox(
+            //   height: 50,
+            // )
+          ],
+        ),
       ),
       txListWidget
     ];
