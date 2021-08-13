@@ -60,7 +60,7 @@ class _ReminderState extends State<Reminder> {
     fltrNotification.schedule(
         1,
         "Budget Manager",
-        "Remainder: " + title.text.toString(),
+        "Reminder: " + title.text.toString(),
         scheduledTime,
         generalNotificationDetails);
   }
@@ -71,109 +71,126 @@ class _ReminderState extends State<Reminder> {
       appBar: AppBar(
         title: Text("Reminder"),
       ),
-      body: Column(
-        children: [
-          Text("Set a reminder to pay your expenses at time"),
-          Text(
-            'Title',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-              color: Colors.black,
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: TextFormField(
-              controller: title,
-              textCapitalization: TextCapitalization.words,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10.0, top: 10.0),
-                filled: true,
-                fillColor: Colors.grey[50],
-                focusColor: Colors.white70,
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                    width: 1.5,
-                  ),
+      body: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Set a reminder to pay your expenses at time"),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Title',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.35,
+                      child: TextFormField(
+                        controller: title,
+                        textCapitalization: TextCapitalization.words,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          contentPadding:
+                              EdgeInsets.only(left: 10.0, top: 10.0),
+                          filled: true,
+                          fillColor: Colors.grey[50],
+                          focusColor: Colors.white70,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 1.5,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 1.5,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                    width: 1.5,
-                  ),
-                ),
-              ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Amount',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.35,
+                      child: TextFormField(
+                        controller: amount,
+                        // textCapitalization: TextCapitalization.words,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          contentPadding:
+                              EdgeInsets.only(left: 10.0, top: 10.0),
+                          filled: true,
+                          fillColor: Colors.grey[50],
+                          focusColor: Colors.white70,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 1.5,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 1.5,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            'Amount',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-              color: Colors.black,
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: TextFormField(
-              controller: amount,
-              // textCapitalization: TextCapitalization.words,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10.0, top: 10.0),
-                filled: true,
-                fillColor: Colors.grey[50],
-                focusColor: Colors.white70,
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                    width: 1.5,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                    width: 1.5,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+            Container(
               width: MediaQuery.of(context).size.width * 0.8,
               child: dateTimeUi(),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: reminder.length,
-              itemBuilder: (ctx, i) => CartItem(
-                reminder[i].time,
-                reminder[i].title,
-                reminder[i].amount,
-                reminder[i].date,
-                context,
+            Expanded(
+              child: ListView.builder(
+                itemCount: reminder.length,
+                itemBuilder: (ctx, i) => CartItem(
+                  reminder[i].time,
+                  reminder[i].title,
+                  reminder[i].amount,
+                  reminder[i].date,
+                  context,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -274,7 +291,7 @@ class _ReminderState extends State<Reminder> {
             ),
           ),
         ),
-        SizedBox(height: 40),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
         TextFormField(
           readOnly: true,
           controller: timeController,
