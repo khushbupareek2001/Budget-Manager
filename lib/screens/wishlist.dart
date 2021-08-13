@@ -118,6 +118,14 @@ class _WishListState extends State<WishList> {
               ),
               Divider(),
               ListTile(
+                leading: Icon(Icons.lock_clock),
+                title: const Text("Reminder"),
+                onTap: () {
+                  Navigator.of(context).pushNamed("/reminder");
+                },
+              ),
+              Divider(),
+              ListTile(
                 leading: Icon(Icons.share),
                 title: const Text("Share"),
                 onTap: () {

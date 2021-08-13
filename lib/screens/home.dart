@@ -282,7 +282,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               ),
               Divider(),
               ListTile(
-                leading: Icon(Icons.favorite),
+                leading: Icon(Icons.lock_clock),
                 title: const Text("Reminder"),
                 onTap: () {
                   Navigator.of(context).pushNamed("/reminder");

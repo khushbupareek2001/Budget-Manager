@@ -43,6 +43,15 @@ List<Transaction> wishList = [];
 List<Transaction> userTransactions = [];
 List<Transaction> personalTransactions = [];
 double familyMoney = 500;
+List<Reminders> reminder = [];
+
+class Reminders {
+  String title;
+  String amount;
+  String date;
+  String time;
+  Reminders(this.title, this.amount, this.date, this.time);
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

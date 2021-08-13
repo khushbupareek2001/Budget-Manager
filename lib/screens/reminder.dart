@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:personal_budget/main.dart';
+import 'package:personal_budget/models/web_response_extractor.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class Reminder extends StatefulWidget {
   // const Reminder({ Key? key }) : super(key: key);
@@ -12,12 +15,55 @@ class Reminder extends StatefulWidget {
 class _ReminderState extends State<Reminder> {
   TextEditingController dateController = TextEditingController();
   TextEditingController title = TextEditingController();
+  TextEditingController amount = TextEditingController();
 
   String dob = "";
 
   TextEditingController timeController = TextEditingController();
+  FlutterLocalNotificationsPlugin fltrNotification;
 
   String time = "";
+  @override
+  void initState() {
+    var androidInitilize =
+        new AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iOSinitilize = new IOSInitializationSettings();
+    var initilizationsSettings = new InitializationSettings(
+        android: androidInitilize, iOS: iOSinitilize);
+    fltrNotification = new FlutterLocalNotificationsPlugin();
+    fltrNotification.initialize(initilizationsSettings,
+        onSelectNotification: notificationSelected);
+    super.initState();
+  }
+
+  Future notificationSelected(String payload) async {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: Text("Notification : $payload"),
+      ),
+    );
+  }
+
+  Future _showNotification() async {
+    var androidDetails = new AndroidNotificationDetails(
+        "Channel ID", "Desi programmer", "This is my channel",
+        importance: Importance.max);
+    var iSODetails = new IOSNotificationDetails();
+    var generalNotificationDetails =
+        new NotificationDetails(android: androidDetails, iOS: iSODetails);
+
+    // await fltrNotification.show(
+    //     0, "Task", "You created a Task", generalNotificationDetails,
+    //     payload: "Task");
+    var scheduledTime = DateTime.now().add(Duration(seconds: 5));
+    fltrNotification.schedule(
+        1,
+        "Budget Manager",
+        "Remainder: " + title.text.toString(),
+        scheduledTime,
+        generalNotificationDetails);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +113,136 @@ class _ReminderState extends State<Reminder> {
               ),
             ),
           ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            'Amount',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: TextFormField(
+              controller: amount,
+              // textCapitalization: TextCapitalization.words,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: 10.0, top: 10.0),
+                filled: true,
+                fillColor: Colors.grey[50],
+                focusColor: Colors.white70,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Colors.grey,
+                    width: 1.5,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Colors.grey,
+                    width: 1.5,
+                  ),
+                ),
+              ),
+            ),
+          ),
           Center(
             child: Container(
               width: MediaQuery.of(context).size.width * 0.8,
               child: dateTimeUi(),
             ),
           ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: reminder.length,
+              itemBuilder: (ctx, i) => CartItem(
+                reminder[i].time,
+                reminder[i].title,
+                reminder[i].amount,
+                reminder[i].date,
+                context,
+              ),
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget CartItem(
+    final String time,
+    final String title,
+    final String amount,
+    final String date,
+    BuildContext context,
+  ) {
+    return Card(
+      margin: EdgeInsets.symmetric(
+        horizontal: 15,
+        vertical: 4,
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(8),
+        child: ListTile(
+          leading: CircleAvatar(
+            child: Padding(
+              padding: EdgeInsets.all(5),
+              child: FittedBox(
+                child: Text('\$$amount'),
+              ),
+            ),
+          ),
+          title: Text(title),
+          // subtitle: Text('Total: \$${(amount * amount)}'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Date; " + date),
+              Text("Time: " + time),
+            ],
+          ),
+          trailing: IconButton(
+              onPressed: () {
+                reminder.removeWhere((element) => (element.date == date &&
+                    element.time == time &&
+                    element.title == title &&
+                    element.title == title));
+                WebResponseExtractor.showToast("Deleted Successfully");
+                Navigator.of(context).pop();
+              },
+              icon: Icon(
+                Icons.delete,
+                color: Colors.red,
+              )),
+          // trailing: Text('$date x'),
+          // trailing: IconButton(
+          //   onPressed: () {
+          //     setState(() {
+          //       personalTransactions.add(Transaction(
+          //           id: id, title: title, amount: amount, date: date));
+          //       familyMoney = familyMoney - amount;
+          //       wishList.removeWhere((element) => element.id == id);
+          //     });
+          //     WebResponseExtractor.showToast(
+          //         "Added to Transaction Successfully.");
+
+          //     // Navigator.of(context).pop();
+          //   },
+          //   icon: Icon(
+          //     Icons.done,
+          //     color: Colors.green,
+          //   ),
+          // ),
+        ),
       ),
     );
   }
@@ -137,7 +306,16 @@ class _ReminderState extends State<Reminder> {
               width: MediaQuery.of(context).size.width * 0.3,
             ),
             RaisedButton(
-              onPressed: () {},
+              onPressed: () {
+                _showNotification();
+                reminder.add(Reminders(
+                    title.text.toString(),
+                    amount.text.toString(),
+                    dateController.text.toString(),
+                    timeController.text.toString()));
+                WebResponseExtractor.showToast("Reminder added Successfully");
+                Navigator.of(context).pop();
+              },
               child: Text("Add"),
             ),
           ],

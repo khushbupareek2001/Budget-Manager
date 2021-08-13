@@ -179,6 +179,8 @@ class CreateJoinFamily extends StatelessWidget {
                                           MaterialPageRoute(
                                               builder: (context) => Home(true)),
                                           (Route<dynamic> route) => false);
+                                      WebResponseExtractor.showToast(
+                                          "Family Created Successfully");
                                       // Navigator.of(context).push(
                                       //   MaterialPageRoute(
                                       //     builder: (context) => ,
@@ -285,14 +287,15 @@ class CreateJoinFamily extends StatelessWidget {
                                             "Please Enter Your Role in the family");
                                       else {
                                         userMain = controller.text.toString();
-                                        familyMoney =
-                                            (double.parse(controller3.text) !=
-                                                        null &&
-                                                    double.parse(
-                                                            controller3.text) !=
-                                                        0)
-                                                ? double.parse(controller3.text)
-                                                : 500;
+                                        familyMoney = (double.parse(
+                                                        controller3.text) !=
+                                                    null &&
+                                                double.parse(
+                                                        controller3.text) !=
+                                                    0)
+                                            ? familyMoney +
+                                                double.parse(controller3.text)
+                                            : 500;
                                         Navigator.of(context)
                                             .pushAndRemoveUntil(
                                                 MaterialPageRoute(
@@ -300,6 +303,8 @@ class CreateJoinFamily extends StatelessWidget {
                                                         Home(false)),
                                                 (Route<dynamic> route) =>
                                                     false);
+                                        WebResponseExtractor.showToast(
+                                            "Family Joined");
                                       }
                                     },
                                     child: Text("Done"))
