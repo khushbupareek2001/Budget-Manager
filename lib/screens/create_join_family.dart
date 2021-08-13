@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:personal_budget/main.dart';
 import 'package:personal_budget/models/web_response_extractor.dart';
 import './home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class CreateJoinFamily extends StatelessWidget {
   static const routeName = "/-gender-screen";
@@ -153,7 +155,7 @@ class CreateJoinFamily extends StatelessWidget {
                                     },
                                     child: Text("Cancel")),
                                 TextButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (controller.text.isEmpty)
                                       WebResponseExtractor.showToast(
                                           "Please Enter Family Head Name");
@@ -174,7 +176,20 @@ class CreateJoinFamily extends StatelessWidget {
                                               double.parse(controller3.text) !=
                                                   0)
                                           ? double.parse(controller3.text)
-                                          : 500;
+                                          : 5000;
+                                      final prefs =
+                                          await SharedPreferences.getInstance();
+                                      final userData = json.encode(
+                                        {
+                                          "token": "as",
+                                          "userId": "asc",
+                                          "displayName": userMain,
+                                          "email": userEmail,
+                                          "url": userUrl,
+                                          "familyMoney": familyMoney,
+                                        },
+                                      );
+                                      prefs.setString("userData", userData);
                                       Navigator.of(context).pushAndRemoveUntil(
                                           MaterialPageRoute(
                                               builder: (context) => Home(true)),
@@ -275,7 +290,7 @@ class CreateJoinFamily extends StatelessWidget {
                                     },
                                     child: Text("Cancel")),
                                 TextButton(
-                                    onPressed: () {
+                                    onPressed: () async {
                                       if (controller.text.isEmpty)
                                         WebResponseExtractor.showToast(
                                             "Please Enter Family Head Email Id");
@@ -295,7 +310,20 @@ class CreateJoinFamily extends StatelessWidget {
                                                     0)
                                             ? familyMoney +
                                                 double.parse(controller3.text)
-                                            : 500;
+                                            : 5000;
+                                        final prefs = await SharedPreferences
+                                            .getInstance();
+                                        final userData = json.encode(
+                                          {
+                                            "token": "as",
+                                            "userId": "asc",
+                                            "displayName": userMain,
+                                            "email": userEmail,
+                                            "url": userUrl,
+                                            "familyMoney": familyMoney,
+                                          },
+                                        );
+                                        prefs.setString("userData", userData);
                                         Navigator.of(context)
                                             .pushAndRemoveUntil(
                                                 MaterialPageRoute(

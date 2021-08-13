@@ -13,6 +13,7 @@ import 'package:personal_budget/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:share/share.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WishList extends StatefulWidget {
   bool isCreate;
@@ -22,6 +23,16 @@ class WishList extends StatefulWidget {
 }
 
 class _WishListState extends State<WishList> {
+  Future<void> logout() async {
+    // if (googleSignIn.currentUser != null) {
+    //   await googleSignIn.disconnect();
+    //   FirebaseAuth.instance.signOut();
+    // }
+    // notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("userData");
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -160,9 +171,11 @@ class _WishListState extends State<WishList> {
                 leading: Icon(Icons.exit_to_app),
                 title: const Text("Logout"),
                 onTap: () {
-                  Provider.of<Auth>(context, listen: false).logout();
+                  logout();
                   Navigator.of(context).pop();
-                  Navigator.of(context).pushReplacementNamed("/");
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => SplashScreen()),
+                      (Route<dynamic> route) => false);
                 },
               ),
               Divider(),

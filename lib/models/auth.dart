@@ -98,17 +98,17 @@ class Auth with ChangeNotifier {
         userUrl = auth.currentUser.photoURL;
         customerId = _userId;
         notifyListeners();
-        final prefs = await SharedPreferences.getInstance();
-        final userData = json.encode(
-          {
-            "token": _token,
-            "userId": _userId,
-            "displayName": userMain,
-            "email": userEmail,
-            "url": userUrl
-          },
-        );
-        prefs.setString("userData", userData);
+        // final prefs = await SharedPreferences.getInstance();
+        // final userData = json.encode(
+        //   {
+        //     "token": _token,
+        //     "userId": _userId,
+        //     "displayName": userMain,
+        //     "email": userEmail,
+        //     "url": userUrl
+        //   },
+        // );
+        // prefs.setString("userData", userData);
       });
     } else {
       await auth
@@ -128,17 +128,17 @@ class Auth with ChangeNotifier {
     userUrl = auth.currentUser.photoURL;
     customerId = _userId;
     notifyListeners();
-    final prefs = await SharedPreferences.getInstance();
-    final userData = json.encode(
-      {
-        "token": _token,
-        "userId": _userId,
-        "displayName": userMain,
-        "email": userEmail,
-        "url": userUrl
-      },
-    );
-    prefs.setString("userData", userData);
+    // final prefs = await SharedPreferences.getInstance();
+    // final userData = json.encode(
+    //   {
+    //     "token": _token,
+    //     "userId": _userId,
+    //     "displayName": userMain,
+    //     "email": userEmail,
+    //     "url": userUrl
+    //   },
+    // );
+    // prefs.setString("userData", userData);
     checkSignup = false;
   }
 
@@ -163,6 +163,9 @@ class Auth with ChangeNotifier {
     userEmail = extractUserData["email"];
     userUrl = extractUserData["url"];
     customerId = _userId;
+    familyMoney = extractUserData["familyMoney"] != null
+        ? extractUserData["familyMoney"]
+        : 5000;
     notifyListeners();
     return true;
   }

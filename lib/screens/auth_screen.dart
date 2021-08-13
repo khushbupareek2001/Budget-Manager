@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_budget/login.dart';
 // import 'package:silaiclub/login.dart';
 import '../models/web_response_extractor.dart';
 import '../models/auth.dart';
@@ -175,9 +176,8 @@ class _AuthScreenState extends State<AuthScreen>
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(
-        children: [
+        backgroundColor: Colors.white,
+        body: Stack(children: [
           // Positioned(
           //   left: 0,
           //   right: 0,
@@ -369,9 +369,35 @@ class _AuthScreenState extends State<AuthScreen>
                         ),
                 ),
               )),
-        ],
-      ),
-    );
+
+          Positioned(
+            top: MediaQuery.of(context).size.height - height * 0.14,
+            left: 0,
+            right: 0,
+            child: TextButton(
+              onPressed: () {
+                // Navigator.pushAndRemoveUntil(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => LoginScreen()),
+                //     (route) => false);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
+              },
+              style: TextButton.styleFrom(
+                  minimumSize: Size(150, 40),
+                  backgroundColor: Colors.blueGrey,
+                  primary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  )),
+              child: const Text(
+                "Login with Mobile Number",
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+          )
+        ]));
   }
 
   Future<void> checkEmailVerified() async {

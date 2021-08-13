@@ -10,6 +10,7 @@ import '../models/transaction.dart';
 import 'package:provider/provider.dart';
 import '../models/auth.dart';
 import 'package:share/share.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PersonalExpenses extends StatefulWidget {
   static const routeName = "/personal_expenses";
@@ -146,6 +147,16 @@ class _PersonalExpensesState extends State<PersonalExpenses>
       ),
       txListWidget
     ];
+  }
+
+  Future<void> logout() async {
+    // if (googleSignIn.currentUser != null) {
+    //   await googleSignIn.disconnect();
+    //   FirebaseAuth.instance.signOut();
+    // }
+    // notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("userData");
   }
 
   @override
@@ -298,9 +309,11 @@ class _PersonalExpensesState extends State<PersonalExpenses>
                 leading: Icon(Icons.exit_to_app),
                 title: const Text("Logout"),
                 onTap: () {
-                  Provider.of<Auth>(context, listen: false).logout();
+                  logout();
                   Navigator.of(context).pop();
-                  Navigator.of(context).pushReplacementNamed("/");
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => SplashScreen()),
+                      (Route<dynamic> route) => false);
                 },
               ),
               Divider(),

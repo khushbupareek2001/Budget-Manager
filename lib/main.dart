@@ -42,7 +42,7 @@ String customerId;
 List<Transaction> wishList = [];
 List<Transaction> userTransactions = [];
 List<Transaction> personalTransactions = [];
-double familyMoney = 500;
+double familyMoney = 5000;
 List<Reminders> reminder = [];
 
 class Reminders {
