@@ -6,7 +6,7 @@ import 'package:personal_budget/screens/personal_expenses.dart';
 import '../models/web_response_extractor.dart';
 import '../models/auth.dart';
 import 'package:provider/provider.dart';
-// import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:personal_budget/main.dart';
@@ -163,7 +163,7 @@ class _WishListState extends State<WishList> {
                 title: const Text("FeedBack"),
                 onTap: () {
                   final email = "himanshudasingh@gmail.com";
-                  // launch("mailto:$email?subject=Feedback");
+                  launch("mailto:$email?subject=Feedback");
                 },
               ),
               Divider(),

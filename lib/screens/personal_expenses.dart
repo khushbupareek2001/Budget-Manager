@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../models/auth.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PersonalExpenses extends StatefulWidget {
   static const routeName = "/personal_expenses";
@@ -301,7 +302,7 @@ class _PersonalExpensesState extends State<PersonalExpenses>
                 title: const Text("FeedBack"),
                 onTap: () {
                   final email = "himanshudasingh@gmail.com";
-                  // launch("mailto:$email?subject=Feedback");
+                  launch("mailto:$email?subject=Feedback");
                 },
               ),
               Divider(),
