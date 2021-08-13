@@ -16,6 +16,7 @@ import 'package:share/share.dart';
 import 'package:personal_budget/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:draw_graph/draw_graph.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   bool isCreate;
@@ -410,7 +411,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 title: const Text("FeedBack"),
                 onTap: () {
                   final email = "himanshudasingh@gmail.com";
-                  // launch("mailto:$email?subject=Feedback");
+                  launch("mailto:$email?subject=Feedback");
                 },
               ),
               Divider(),
