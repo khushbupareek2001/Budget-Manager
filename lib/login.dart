@@ -17,13 +17,13 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: HexColor("#E98580"),
+        backgroundColor: Colors.blue,
         centerTitle: true,
         title: const Text('Verification'),
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: HexColor("#E98580"),
+          color: Colors.blue,
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   children: [
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.15,
+                      height: MediaQuery.of(context).size.height * 0.25,
                       // padding: EdgeInsets.all(
                       //     MediaQuery.of(context).size.width * 0.1),
                       padding: EdgeInsets.fromLTRB(
@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           MediaQuery.of(context).size.width * 0.1,
                           0),
 
-                      child: Image.asset("assets/images/TransparentLogo.png",
+                      child: Image.asset("assets/images/images.png",
                           fit: BoxFit.cover),
                     ),
                     Container(
@@ -163,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ElevatedButton(
                     // color: HexColor("#DF5E5E"),
                     style:
-                        ElevatedButton.styleFrom(primary: HexColor("#DF5E5E")),
+                        ElevatedButton.styleFrom(primary: Colors.blue),
                     onPressed: () {
                       if (_userNameController.text.isEmpty)
                         WebResponseExtractor.showToast(

@@ -34,13 +34,13 @@ class _OTPScreenState extends State<OTPScreen> {
       key: _scaffoldkey,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: HexColor("#E98580"),
+        backgroundColor: Colors.blue,
         centerTitle: true,
         title: Text('OTP Verification'),
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: HexColor("#E98580"),
+          color: Colors.blue,
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -56,7 +56,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   padding:
                       EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
                   child:
-                      Image.asset("assets/images/book.jpg", fit: BoxFit.cover),
+                      Image.asset("assets/images/otp.png", fit: BoxFit.cover),
                 ),
                 Container(
                   margin:
